@@ -2,8 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define LINE_LENGTH 100
+
+struct clip *build_a_list();
 void split_line();
 struct clip *append();
+int find_length();
+void print_lst();
 
 struct clip {
 	int views;
@@ -16,21 +21,6 @@ struct clip {
 int main(void)
 {
 	/*
-	char *path = "node_data.txt";
-	FILE *f = fopen(path, "r");
-
-	char line[100];
-
-	char *temp;
-	while ( (temp = fgets(line, 100, f)) != NULL)
-	{
-		//puts(temp);
-		printf("%s",temp);
-	}
-
-	fclose(f);
-	*/
-
 	struct clip *c = malloc(sizeof(struct clip));
 	struct clip *h;
 	char *f[5];
@@ -40,6 +30,15 @@ int main(void)
 	h = append(c, f);
 	printf("%s\n", h->id);
 
+	*/
+
+	int cnt = 0;
+	head = build_a_list("node_data.txt");
+	cnt = find_length(head);
+
+	printf("%d\n", cnt);
+
+
 	/*
 	int i;
 	for(i = 0; i < 5; i++)
@@ -47,6 +46,26 @@ int main(void)
 	*/
 
 	return 0;
+}
+
+struct clip *build_a_list(char *fn)
+{
+	FILE *fp = fopen(fn, "r");
+	struct clip *hp, *final;
+	char *fields[4];
+	char line[LINE_LENGTH];
+	int cnt = 0;
+	hp = NULL;
+
+	char *temp;
+	while ( (temp = fgets(line, 100, fp)) != NULL)
+	{
+		split_line(fields, line);
+		final = append(&hp, fields);
+	}
+
+	fclose(fp);
+	return final;
 }
 
 void split_line(char **fields, char *line)
@@ -100,4 +119,18 @@ struct clip *append(struct clip **hp, char **five)
 	}
 
 	return *hp;
+}
+
+int find_length(struct clip *hp)
+{
+	int cnt = 0;
+	struct clip *curr = head;
+
+	while(curr != NULL)
+	{
+		cnt++;
+		curr = curr->next;
+	}
+
+	return cnt;
 }
