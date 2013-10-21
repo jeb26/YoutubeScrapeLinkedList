@@ -58,6 +58,30 @@ void push(struct node** head, int d)
 	*head = new_node;
 }
 
+struct node *append(struct node **head, int d)
+{
+	struct node *current = *head;
+	struct node *new;
+
+	new = malloc(sizeof(struct node));
+	new->data = d;
+	new->next = NULL;
+
+	//length 0
+	if (current == NULL)
+	{
+		*head = new;
+	}
+	else {
+		//find last node
+		while(current->next != NULL)
+		{
+			current = current->next;
+		}
+		current->next = new;
+	}
+}
+
 int main(int argc, const char *argv[])
 {
 	int size;
@@ -67,6 +91,7 @@ int main(int argc, const char *argv[])
 
 	push(&head, 67);
 	push(&head, 11);
+	append(&head, 60);
 
 	size = length(head);
 

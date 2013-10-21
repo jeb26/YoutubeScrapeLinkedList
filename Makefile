@@ -1,7 +1,10 @@
-OBJS = list tokens readfile
+OBJS = list tokens readfile fgets
 CC = gcc
 
-all: list tokens readfile
+all: list tokens readfile fgets
+
+fgets:
+	$(CC) fgets.c -o fgets
 
 readfile:
 	$(CC) readfile.c -o readfile
