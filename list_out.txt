@@ -1,0 +1,5 @@
+size of linked list is: 4
+15
+0
+20
+0
